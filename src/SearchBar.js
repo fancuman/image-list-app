@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import unsplash from "./api/unsplash";
-import ImageList from "./ImageList";
 
 export default class SearchBar extends Component {
   constructor(props) {
@@ -11,21 +9,14 @@ export default class SearchBar extends Component {
   onSubmit = async e => {
     e.preventDefault();
     const term = this.inputRef.current.value;
-    console.log(this.inputRef.current.value);
-    const result = await unsplash.get("", {
-      params: {
-        query: term
-      }
-    });
-    this.setState({ terms: result.data.results });
+    this.props.onSearchSubmit(term);
   };
   render() {
     return (
-      <div className="ui segement">
+      <div className="ui segment">
         <form className="ui form" onSubmit={this.onSubmit}>
           <input className="ui field" ref={this.inputRef} />
         </form>
-        <ImageList terms={this.state.terms} />
       </div>
     );
   }
